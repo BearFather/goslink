@@ -1,0 +1,4 @@
+goslink
+=======
+
+MajorMud Gossip link

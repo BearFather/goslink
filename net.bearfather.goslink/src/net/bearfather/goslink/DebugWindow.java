@@ -29,9 +29,7 @@ private boolean win;
 		 pack();
 		 setVisible(true);
 	 }
-	 
    }
-
 public void append(String msg) {
 	if (win==true){textarea.append(msg+"\n");}
 	else{System.out.println(msg);}

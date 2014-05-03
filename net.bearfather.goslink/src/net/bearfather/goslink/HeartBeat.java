@@ -23,7 +23,7 @@ public class HeartBeat implements Runnable {
 	}
 	public void checkserver(int num){
 		if (num==1){TC=GosLink.TC1;ol=offline1;ct=count1;}
-		else{TC=GosLink.TC1;ol=offline2;ct=count2;}
+		else{TC=GosLink.TC2;ol=offline2;ct=count2;}
 		if (TC.loggedin == 1){
 			if (ct==3){
 				TC.write("");

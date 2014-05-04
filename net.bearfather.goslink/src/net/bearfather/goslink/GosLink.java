@@ -125,11 +125,11 @@ static{
 	public int getTcn() {
 		return tcn;
 	}
-	public static String prps(String name) {
-		return prop.getProperty(name);
-	}
 	public GosLink(int set) {
 		this.tcn = set;
+	}
+	public static String prps(String name) {
+		return prop.getProperty(name);
 	}
 	public static void startit(int num){
 		if (num==1){server1=new Thread (new GosLink(1));server1.start();}

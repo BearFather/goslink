@@ -13,7 +13,6 @@ public class TelnetService {
 	public static String player;
 	public int loggedin=0;
 	public static int runner=1;
-	public int bug;
 	public TelnetService(String server, int port) {
 		this.server = server.replace("http://", "");
 		this.port = port;
@@ -29,10 +28,10 @@ public class TelnetService {
 	public String getTelnetSessionAsString(String tcb) throws SocketException, IOException, InterruptedException {
         startTelnetSession();
         GosLink.dw.append("Logging into server "+tcb+".");
-        if (tcb.equals("1")){bug=1;
+        if (tcb.equals("1")){
             loginUser(GosLink.prps("user1"),GosLink.prps("game1"),GosLink.prps("pass1"));
         }
-        else{bug=2;
+        else{
         	loginUser(GosLink.prps("user2"),GosLink.prps("game2"),GosLink.prps("pass2"));
         }
         loggedin=1;
@@ -44,7 +43,6 @@ public class TelnetService {
 		readUntil(GosLink.prps("ppass"));
 		write(pass+"\r\n");
 		readUntil("(N)onstop, (Q)uit, or (C)ontinue?");
-//		readUntil2("(N)onstop, (Q)uit, or (C)ontinue?",bug);
 		write("c");
 		write("\n");
 		readUntil(GosLink.prps("pmenu"));
@@ -77,38 +75,6 @@ public class TelnetService {
             buffer.append(ch);
         	msg=buffer.toString();
         	String chk=msg.trim();
-         	if (ch == lastChar) {
-                if (buffer.toString().endsWith(pattern)) {
-                	broken=msg.split(" ");
-                	for (int i=0;i<broken.length;i++ ) {
-                		if (broken[i].equals("gossips:")){
-                			player=broken[i-1];
-                		}
-                	}
-                    return buffer.toString();
-                }
-        	}
-            if (chk.endsWith(hangup)){
-            	GosLink.dw.append("BBS shutdown detected!");
-            	loggedin=0;
-            	return "!OffLINE+02";
-            }
-            ch = (char) dataIn.read();
-        }
-        return null;
-	}
-	public String readUntil2(String pattern,int num) throws InterruptedException, IOException {
-        String hangup=GosLink.prps("cleanup");
-       	char lastChar = pattern.charAt(pattern.length() - 1);
-        StringBuffer buffer = new StringBuffer();
-        char ch = (char) dataIn.read();
-        String msg;
-        String broken[];
-        while (runner==1) {
-            buffer.append(ch);
-        	msg=buffer.toString();
-        	String chk=msg.trim();
-        	if (num==1){GosLink.dw.append(chk);}
          	if (ch == lastChar) {
                 if (buffer.toString().endsWith(pattern)) {
                 	broken=msg.split(" ");

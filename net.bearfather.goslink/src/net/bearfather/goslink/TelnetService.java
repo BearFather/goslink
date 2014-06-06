@@ -15,6 +15,7 @@ public class TelnetService {
 	public int loggedin=0;
 	public static int runner=1;
 	static int ghost =0;
+	public int mynum=0;
 	public TelnetService(String server, int port) {
 		this.server = server.replace("http://", "");
 		this.port = port;
@@ -65,6 +66,7 @@ public class TelnetService {
 			e.printStackTrace();
 		}
 	}
+
 	public String readUntil(String pattern) throws InterruptedException, IOException {
 		int cnt=0;
 		String hangup=GosLink.prps("cleanup");
@@ -89,6 +91,18 @@ public class TelnetService {
         	  }
         	  cnt++;
         	}
+     		if (chk.endsWith("Room error")){
+     			return "Room error";
+     		}
+     		if (msg.endsWith("just entered the Realm.")){
+     			broken=msg.split(" ");
+            	for (int i=0;i<broken.length;i++ ) {
+            		if (broken[i].equals("just")){
+            			player=broken[i-1];
+            		}
+            	}
+                GosLink.gb.enter(player.trim(),mynum);
+     		}
          	if (ch == lastChar) {
          		if (buffer.toString().endsWith(pattern)) {
                 	broken=msg.split(" ");
@@ -99,7 +113,16 @@ public class TelnetService {
                 	}
                     return buffer.toString();
                 }
-  
+         		
+         		if (buffer.toString().endsWith("telepaths:")) {
+                	broken=msg.split(" ");
+                	for (int i=0;i<broken.length;i++ ) {
+                		if (broken[i].equals("telepaths:")){
+                			player=broken[i-1];
+                		}
+                	}
+                    GosLink.gb.tele(player.trim().toLowerCase(),mynum);
+                }
                 if (chk.endsWith(hangup)){
                 	GosLink.dw.append("BBS shutdown detected!");
                 	loggedin=0;

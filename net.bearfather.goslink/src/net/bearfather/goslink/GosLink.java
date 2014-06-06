@@ -34,6 +34,7 @@ static{
 	static TelnetService TC1 = new TelnetService(prop.getProperty("server1"), 23);
 //	public static DebugConsole dw=new DebugConsole();//Linux
 	public static DebugWindow dw=new DebugWindow();  //Non-Linux
+	public static gosbot gb=new gosbot();
 	static TelnetService TC2 = new TelnetService(prop.getProperty("server2"), 23);
     public static Thread server1 = new Thread (new GosLink(1));
     public static Thread server2 = new Thread (new GosLink(2));
@@ -84,8 +85,8 @@ static{
 	
 	public String Tclient(int num) throws SocketException, IOException, InterruptedException{
 		TelnetService TC;
-		if (num == 1){TC = TC1;}
-		else {TC = TC2;}
+		if (num == 1){TC = TC1;TC1.mynum=1;}
+		else {TC = TC2;TC2.mynum=2;}
 		TC.getTelnetSessionAsString(Integer.toString(num));
 		TC.readUntil(" ");
 		dw.append("Server "+num+": ");

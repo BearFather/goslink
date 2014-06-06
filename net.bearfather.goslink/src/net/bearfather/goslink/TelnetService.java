@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.SocketException;
+
 import org.apache.commons.net.telnet.TelnetClient;
 public class TelnetService {
 	private final String server;
@@ -13,11 +14,13 @@ public class TelnetService {
 	public static String player;
 	public int loggedin=0;
 	public static int runner=1;
+	static int ghost =0;
 	public TelnetService(String server, int port) {
 		this.server = server.replace("http://", "");
 		this.port = port;
 	}
 	public void killme() throws IOException{
+		GosLink.dw.append("haha");
 		telnet.disconnect();
 	}
 	private void startTelnetSession() throws SocketException, IOException {
@@ -42,11 +45,9 @@ public class TelnetService {
 		write(name);
 		readUntil(GosLink.prps("ppass"));
 		write(pass+"\r\n");
-		readUntil("(N)onstop, (Q)uit, or (C)ontinue?");
-		write("c");
-		write("\n");
 		readUntil(GosLink.prps("pmenu"));
-		write("\n"+cmd);
+		if (ghost == 0){write(cmd);}
+		else {write(cmd+"\n");}
 		readUntil(GosLink.prps("pmud"));
 		write("e");
 		write("\n");
@@ -65,7 +66,10 @@ public class TelnetService {
 		}
 	}
 	public String readUntil(String pattern) throws InterruptedException, IOException {
-        String hangup=GosLink.prps("cleanup");
+		int cnt=0;
+		String hangup=GosLink.prps("cleanup");
+        String nonstop="(N)onstop, (Q)uit, or (C)ontinue?";
+        String ghosts="Enter your password to end the other connection and log on.";
        	char lastChar = pattern.charAt(pattern.length() - 1);
         StringBuffer buffer = new StringBuffer();
         char ch = (char) dataIn.read();
@@ -75,8 +79,18 @@ public class TelnetService {
             buffer.append(ch);
         	msg=buffer.toString();
         	String chk=msg.trim();
+        	if (chk.endsWith(ghosts)){
+        		ghost=1;
+        	}
+        	if (chk.endsWith(nonstop)){
+        	  if (cnt == 0){
+            	dataOut.print("n\b");
+    			dataOut.flush();
+        	  }
+        	  cnt++;
+        	}
          	if (ch == lastChar) {
-                if (buffer.toString().endsWith(pattern)) {
+         		if (buffer.toString().endsWith(pattern)) {
                 	broken=msg.split(" ");
                 	for (int i=0;i<broken.length;i++ ) {
                 		if (broken[i].equals("gossips:")){
@@ -85,11 +99,12 @@ public class TelnetService {
                 	}
                     return buffer.toString();
                 }
-        	}
-            if (chk.endsWith(hangup)){
-            	GosLink.dw.append("BBS shutdown detected!");
-            	loggedin=0;
-            	return "!OffLINE+02";
+  
+                if (chk.endsWith(hangup)){
+                	GosLink.dw.append("BBS shutdown detected!");
+                	loggedin=0;
+                	return "!OffLINE+02";
+                }
             }
             ch = (char) dataIn.read();
         }

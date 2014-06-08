@@ -68,10 +68,11 @@ public class gosbot {
 		else{cmd="/"+plr+" Invalid command:"+msg;}
 		TN.write(cmd);
 	}
-	public void enter(String plr,int num){
+	public void enter(String plr,int num) throws InterruptedException{
 		String gname;
 		if (num==1){TN=GosLink.TC1;gname=GosLink.prps("muser1");}
 		else{TN=GosLink.TC2;gname=GosLink.prps("muser2");}
+		Thread.sleep(3000);
 		TN.write("/"+plr+" Hello "+plr+".  My name is "+gname+".  I am a GosLink Bot.  Please Telepath me @help for commands.");
 	}
 }

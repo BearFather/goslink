@@ -103,6 +103,11 @@ public class TelnetService {
             	}
                 GosLink.gb.enter(player.trim(),mynum);
      		}
+            if (chk.endsWith(hangup)){
+            	GosLink.dw.append("BBS shutdown detected!");
+            	loggedin=0;
+            	return "!OffLINE+02";
+            }
          	if (ch == lastChar) {
          		if (buffer.toString().endsWith(pattern)) {
                 	broken=msg.split(" ");
@@ -122,11 +127,6 @@ public class TelnetService {
                 		}
                 	}
                     GosLink.gb.tele(player.trim().toLowerCase(),mynum);
-                }
-                if (chk.endsWith(hangup)){
-                	GosLink.dw.append("BBS shutdown detected!");
-                	loggedin=0;
-                	return "!OffLINE+02";
                 }
             }
             ch = (char) dataIn.read();

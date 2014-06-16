@@ -1,4 +1,9 @@
 package net.bearfather.goslink;
+
+import net.bearfather.goslink.GosLink;
+import net.bearfather.goslink.TelnetService;
+import net.bearfather.goslink.gosbot;
+
 public class HeartBeat implements Runnable {
 	private int offline1=0;
 	private int offline2=0;
@@ -8,9 +13,9 @@ public class HeartBeat implements Runnable {
 	private int ct;
 	private TelnetService TC;
 	private int time=Integer.parseInt(GosLink.prps("time"));
-	
 
 	public void run(){
+		
 		if (time!=0){time=time-1;}
 		GosLink.dw.append("HeartBeat Started.");
 		while (true){
@@ -18,9 +23,11 @@ public class HeartBeat implements Runnable {
 				Thread.sleep(60000);
 				checkserver(1);
 				checkserver(2);
+				gosbot.enterchk();
 			} catch (Exception e) {e.printStackTrace();}
 		}
 	}
+	
 	public void checkserver(int num){
 		if (num==1){TC=GosLink.TC1;ol=offline1;ct=count1;}
 		else{TC=GosLink.TC2;ol=offline2;ct=count2;}
@@ -42,4 +49,5 @@ public class HeartBeat implements Runnable {
 		if (num==1){offline1=ol;count1=ct;}
 		else{offline2=ol;count2=ct;}
 	}
+
 }

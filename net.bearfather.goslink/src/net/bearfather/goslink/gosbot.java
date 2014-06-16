@@ -43,8 +43,8 @@ public class gosbot {
 		}
 		else if (chk.equals("@evil")){
 			TN.write("sys god "+plr+" neutral");
-			TN.write("sys god "+plr+" add evil 150");
 			TN.readit("\n");
+			TN.write("sys god "+plr+" add evil 150");
 			TN.readit("\n");
 			rtn=TN.readit("\n");
 			cmd="/"+plr+" "+rtn;

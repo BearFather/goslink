@@ -48,3 +48,5 @@ time=5
 #Display a window? If false, It will run in the background and 
 #only way to end it will be to end the process.
 window=true
+#Use GosBot?  It's and admin bot, good,evil,train,blah
+bot=true

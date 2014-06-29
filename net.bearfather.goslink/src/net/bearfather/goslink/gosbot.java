@@ -18,8 +18,11 @@ public class gosbot {
 		msg = tmsg[1];
 		String broken[]=msg.trim().split(" ");
 		String chk=broken[0].trim().toLowerCase();
-
-		if (chk.equals("@abils")){
+		
+		if (!Boolean.valueOf(GosLink.prps("bot"))){
+			cmd="/"+plr+" Sorry GosBot is disabled.";
+		}
+		else if (chk.equals("@abils")){
 			TN.write("sys god "+plr+" abil");
 			TN.readit("\n");
 			rtn=TN.readit("\n");
@@ -97,6 +100,7 @@ public class gosbot {
 		int write=0;
 		int cnt=0;
 		String nme;
+		if (!Boolean.valueOf(GosLink.prps("bot"))){found=255;}
 		while (found==0){
 			cnt=GosLink.names.size();
 			for (int i=0;i<cnt;i++){

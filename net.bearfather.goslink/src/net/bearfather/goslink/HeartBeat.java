@@ -23,7 +23,7 @@ public class HeartBeat implements Runnable {
 				Thread.sleep(60000);
 				checkserver(1);
 				checkserver(2);
-				gosbot.enterchk();
+				if (Boolean.valueOf(GosLink.prps("bot"))){gosbot.enterchk();}
 			} catch (Exception e) {e.printStackTrace();}
 		}
 	}

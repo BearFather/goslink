@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class gosbot {
 	private TelnetService TN;
 	public ArrayList<String> enters =new ArrayList<String>();
-	
+
 	public void tele(String plr,int num) throws InterruptedException, IOException{
 		if (num==1){TN=GosLink.TC1;}
 		else{TN=GosLink.TC2;}

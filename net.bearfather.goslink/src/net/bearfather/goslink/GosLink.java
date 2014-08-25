@@ -37,14 +37,14 @@ static{
 				}
 			}
 	 }
-//	public static DebugWindow dw=new DebugWindow();  //Non-Linux
-	public static DebugConsole dw=new DebugConsole();//Linux
+	public static DebugWindow dw=new DebugWindow();  //Non-Linux
+//	public static DebugConsole dw=new DebugConsole();//Linux
+    public static File fnames = new File("names.txt");
 	public static gosbot gb=new gosbot();
 	static TelnetService TC1 = new TelnetService(prop.getProperty("server1"), 23);
 	static TelnetService TC2 = new TelnetService(prop.getProperty("server2"), 23);
     public static Thread server1 = new Thread (new GosLink(1));
     public static Thread server2 = new Thread (new GosLink(2));
-    public static File fnames = new File("names.txt");
     public static Thread HB= new Thread (new HeartBeat());
     public static ArrayList<String> names =new ArrayList<String>();
     private int tcn;
@@ -152,7 +152,7 @@ static{
     	if (!fnames.exists()){fnames.createNewFile();}
     	BufferedReader rfile = new BufferedReader(new FileReader(fnames));
     	String nme=null;
-    	for (int i=0;i<6;i++){
+    	while (rfile.ready()){
     		nme=rfile.readLine();
     		if (nme!=null && !nme.isEmpty()){
     			names.add(nme);

@@ -37,8 +37,8 @@ static{
 				}
 			}
 	 }
-	public static DebugWindow dw=new DebugWindow();  //Non-Linux
-//	public static DebugConsole dw=new DebugConsole();//Linux
+//	public static DebugWindow dw=new DebugWindow();  //Non-Linux
+	public static DebugConsole dw=new DebugConsole();//Linux
 	public static gosbot gb=new gosbot();
 	static TelnetService TC1 = new TelnetService(prop.getProperty("server1"), 23);
 	static TelnetService TC2 = new TelnetService(prop.getProperty("server2"), 23);
@@ -54,12 +54,7 @@ static{
     	server1.start();
 		server2.start();
 		HB.start();
-		try {
-			filerdr();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		try {filerdr();} catch (IOException e) {e.printStackTrace();}
 	}
 	@Override
 	public void run() {
@@ -125,6 +120,7 @@ static{
 	public static void sayit(int tc,String msg){
 		String tmsg[]=msg.split("<4;2>0:");
 		String player = tmsg[0];
+		String capplayer=player;
 		player=player.toLowerCase().trim();
 		String u1=GosLink.prps("muser1");
 		String u2=GosLink.prps("muser2");
@@ -133,10 +129,10 @@ static{
 		 if  (!player.equals(u2.toLowerCase())){
 			if (tc == 1){
 				dw.append("Server 2: ");
-				TC2.write("gos  "+player+": "+tmsg[1].trim());}
+				TC2.write("gos  "+capplayer+": "+tmsg[1].trim());}
 			else{
 				dw.append("Server 1: " );
-				TC1.write("gos  "+player+": "+tmsg[1].trim());}
+				TC1.write("gos  "+capplayer+": "+tmsg[1].trim());}
 		 }
 		}
 	}

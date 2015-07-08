@@ -1,3 +1,8 @@
+This project has been moved to a new repo.  You can find that at: https://github.com/BearFather/GosLink2
+
+This repo has old broken code.
+
+
 goslink
 =======
 Welcome to goslink.  This is a simple app to link two different realms gossip. If you have any problems email me at BearFather@gmail.com and put in the subject "goslink" so I see it faster.
